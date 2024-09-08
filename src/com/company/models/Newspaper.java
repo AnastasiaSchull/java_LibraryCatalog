@@ -6,10 +6,6 @@ public class Newspaper implements LibraryItem {
     private String dateIssue;
     private String[] headlines;
 
-    public Newspaper(){
-        this.headlines = new String[0];
-    }
-
     @Override
     public void info() {
         System.out.println("Newspaper: " + name + ", Date: " + dateIssue);
@@ -26,14 +22,20 @@ public class Newspaper implements LibraryItem {
         return name;
     }
 
+    @Override
+    public boolean isTitle(String title) {
+        return this.name.equalsIgnoreCase(title);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setDateIssue(String dateIssue) {
         this.dateIssue = dateIssue;
     }
+
     public void setHeadlines(String[] headlines) {
         this.headlines = headlines;
     }
-
 }

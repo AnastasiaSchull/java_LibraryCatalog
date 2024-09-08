@@ -1,5 +1,4 @@
 package com.company.models;
-
 import com.company.interfaces.LibraryItem;
 
 public class Almanac implements LibraryItem {
@@ -24,16 +23,27 @@ public class Almanac implements LibraryItem {
         return title;
     }
 
+    @Override
+    public boolean isTitle(String title) {
+        return this.title.equalsIgnoreCase(title);
+    }
+
+    @Override
+    public boolean isAuthor(String author) {
+        if (books != null) {
+            for (Book book : books) {
+                if (book.isAuthor(author))
+                    return true;
+            }
+        }
+        return false;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public Book[] getBooks() {
-        return books;
     }
 
     public void setBooks(Book[] books) {

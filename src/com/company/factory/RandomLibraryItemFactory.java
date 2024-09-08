@@ -1,5 +1,4 @@
 package com.company.factory;
-
 import com.company.initialisers.AlmanacArrayInit;
 import com.company.initialisers.BookArrayInit;
 import com.company.initialisers.NewspaperArrayInit;
@@ -7,7 +6,6 @@ import com.company.interfaces.LibraryItem;
 import com.company.models.Almanac;
 import com.company.models.Book;
 import com.company.models.Newspaper;
-
 import java.util.Random;
 
 //класс, который по рандому создает обьект либо книги, либо газеты, либо альманаха

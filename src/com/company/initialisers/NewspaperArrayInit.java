@@ -1,8 +1,6 @@
 package com.company.initialisers;
-
 import com.company.interfaces.NewspaperInitialiser;
 import com.company.models.Newspaper;
-
 import java.util.Random;
 
 public class NewspaperArrayInit implements NewspaperInitialiser {

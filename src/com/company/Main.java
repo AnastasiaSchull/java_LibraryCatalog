@@ -1,4 +1,5 @@
 package com.company;
+import com.company.control.MenuManager;
 import com.company.interfaces.LibraryCatalog;
 
 public class Main {

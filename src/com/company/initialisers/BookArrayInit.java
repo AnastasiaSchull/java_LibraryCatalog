@@ -1,8 +1,6 @@
 package com.company.initialisers;
-
 import com.company.interfaces.BookInitialiser;
 import com.company.models.Book;
-
 import java.util.Random;
 
 public class BookArrayInit implements BookInitialiser {

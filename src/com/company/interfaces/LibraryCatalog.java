@@ -1,11 +1,10 @@
 package com.company.interfaces;
 
-public interface LibraryCatalog extends Printable{
+public interface LibraryCatalog {
     void addLibraryItem(LibraryItem item);
-    void addRandomItem();
+    LibraryItem addRandomItem();
     void removeLibraryItem(String title);
     LibraryItem findItemByTitle(String title);
     LibraryItem[] findItemsByAuthor(String author);
-    void printFullInfo();
-    void printSummary();
+    LibraryItem[] getAllItems();
 }

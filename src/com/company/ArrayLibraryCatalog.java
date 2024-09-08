@@ -3,14 +3,9 @@ package com.company;
 import com.company.factory.RandomLibraryItemFactory;
 import com.company.interfaces.LibraryCatalog;
 import com.company.interfaces.LibraryItem;
-import com.company.interfaces.Printable;
-import com.company.models.Almanac;
-import com.company.models.Book;
-import com.company.models.Newspaper;
-
 import java.util.Arrays;
 
-public class ArrayLibraryCatalog implements LibraryCatalog, Printable {
+public class ArrayLibraryCatalog implements LibraryCatalog {
     private static final int DEFAULT_CAPACITY = 100;
     private LibraryItem[] items;
     private int size;
@@ -31,27 +26,35 @@ public class ArrayLibraryCatalog implements LibraryCatalog, Printable {
     }
 
     @Override
-    public void addRandomItem() {
+    public LibraryItem  addRandomItem() {
         LibraryItem item = itemFactory.createRandomItem();
         addLibraryItem(item);
-        item.info();
+        return item;
     }
 
     @Override
     public void removeLibraryItem(String title) {
+        boolean found = false;
         for (int i = 0; i < size; i++) {
-            if (items[i].getTitle().equals(title)) {
+            // используем isTitle вместо прямого доступа к getTitle и сравнения строк
+            if (items[i].isTitle(title)) {
                 System.arraycopy(items, i + 1, items, i, size - i - 1);
-                items[--size] = null;
+                items[--size] = null; // уменьшаем размер после удаления
+                System.out.println("Item removed: " + title);
+                found = true;
                 break;
             }
+        }
+
+        if (!found) {
+            System.out.println("No independent item found with that title.");
         }
     }
 
     @Override
     public LibraryItem findItemByTitle(String title) {
         for (LibraryItem item : items) {
-            if (item != null && item.getTitle().equals(title)) {
+            if (item != null && item.isTitle(title)) {
                 return item;
             }
         }
@@ -60,63 +63,28 @@ public class ArrayLibraryCatalog implements LibraryCatalog, Printable {
 
     @Override
     public LibraryItem[] findItemsByAuthor(String author) {
-        LibraryItem[] tempItems = new LibraryItem[size]; // временный массив для хранения найденных эл-в
-        int foundCount = 0; // счётчик найденных эл-в
+        LibraryItem[] tempItems = new LibraryItem[size]; // временный массив для хранения найденных элементов
+        int foundCount = 0; // счётчик найденных элементов
 
         for (LibraryItem item : items) {
-            if (item instanceof Book && ((Book) item).getAuthor().equals(author)) {
+            if (item != null && item.isAuthor(author)) {
                 tempItems[foundCount++] = item;
-            } else if (item instanceof Almanac) {
-                // проверяем каждую книгу в альманахе
-                Book[] books = ((Almanac) item).getBooks();
-                for (Book book : books) {
-                    if (book.getAuthor().equals(author)) {
-                        tempItems[foundCount++] = item;
-                        break; // прекращаем поиск в этом альманахе после первого совпадения
-                    }
-                }
             }
         }
+
         if (foundCount == 0) {
-            return new LibraryItem[0];
+            return new LibraryItem[0]; // пустой массив, если ничего не найдено
         }
 
-        // создаем массив нужной длины
+        //массив необходимой длины
         LibraryItem[] foundItems = new LibraryItem[foundCount];
         System.arraycopy(tempItems, 0, foundItems, 0, foundCount);
         return foundItems;
     }
 
-    @Override
-    public void printFullInfo() {
-        System.out.println("Full Catalog Info:");
-        for (int i = 0; i < size; i++) {
-            if (items[i] != null) {
-                items[i].info();
-            }
-            System.out.println();
-        }
-    }
 
     @Override
-    public void printSummary() {
-        int totalBooks = 0;
-        int totalNewspapers = 0;
-        int totalAlmanacs = 0;
-
-        for (LibraryItem item : items) {
-            if (item instanceof Book) {
-                totalBooks++;
-            } else if (item instanceof Newspaper) {
-                totalNewspapers++;
-            } else if (item instanceof Almanac) {
-                totalAlmanacs++;
-            }
-        }
-
-        System.out.println("Catalog Summary:");
-        System.out.println("Total books: " + totalBooks);
-        System.out.println("Total newspapers: " + totalNewspapers);
-        System.out.println("Total almanacs: " + totalAlmanacs);
+    public LibraryItem[] getAllItems() {
+        return Arrays.copyOf(items, size); // возвращаем копию массива
     }
 }

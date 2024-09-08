@@ -15,13 +15,16 @@ public class Book implements LibraryItem {
     public String getTitle() {
         return title;
     }
-
+    @Override
+    public boolean isTitle(String title) {
+        return this.title.equalsIgnoreCase(title);
+    }
+    @Override
+    public boolean isAuthor(String author) {
+        return this.author.equalsIgnoreCase(author);
+    }
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
     }
 
     public void setAuthor(String author) {
@@ -31,4 +34,5 @@ public class Book implements LibraryItem {
     public void setPages(int pages) {
         this.pages = pages;
     }
+
 }

@@ -2,7 +2,6 @@ package com.company.initialisers;
 import com.company.interfaces.AlmanacInitialiser;
 import com.company.models.Almanac;
 import com.company.models.Book;
-
 import java.util.Random;
 
     public class AlmanacArrayInit implements AlmanacInitialiser {
